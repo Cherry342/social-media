@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+    <meta charset="ut f-8"
+    <meta name="viewport" content="widith=device-widith, initial-scale=1">
+     <title> I'm Soooo Social | </title>
+    <link href="">
+
+</head>
+<body>
+<h1>Post Feed </h1>
+{% for post in posts%}
+   <div>
+       <img src="{{post['post_image']}}">
+        <p> {{ ost['post_text']}}</p>
+   
+
+{%endfor%}
+       </div>
+   </body>
+</html>
+
+
