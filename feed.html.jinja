@@ -3,8 +3,10 @@
  <head>
     <meta charset="ut f-8">
     <meta name="viewport" content="widith=device-widith, initial-scale=1">
-     <title> I'm Soooo Social | </title>
-    <link href="">
+     <title> Cookie Fashion | </title>
+    <link href="static/style.css" rel="stylesheet">
+    <h5 class="card-title">{{post['display_name']}} (@{{post['username']}})</h5>
+    <h6 class= "card-subtitle mb-2 text-muted">{{post['timestamp'].strftime("%A, %b")}}</h6>
 
 </head>
 <body>
@@ -12,9 +14,11 @@
 {% for post in posts%}
    <div>
        <img src="{{post['post_image']}}">
-        <p> {{ ost['post_text']}}</p>
-   
-
+        <p> {{ post['post_text']}}</p>
+         <p> {{ post['post_timestamp']}}</p>
+    <background-color = violet-red> 
+    <img src ="fb5607" widith="300">
+    
 {%endfor%}
        </div>
    </body>

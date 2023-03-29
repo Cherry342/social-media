@@ -1,0 +1,21 @@
+<form action="/sign-up" method="post">
+    <label>Username:</label>
+    <input type="text" name="username"><br>
+
+    <label>Email:</label>
+    <input type="email" name="email"><br>
+
+    <label>Display Name:</label>
+    <input type="text" name="display_name"><br>
+
+    <label>Biography:</label>
+    <input type="text" name="bio">
+
+    <label>Password:</label>
+    <input type="password" name="password"><br>
+
+    <label>Photo: </label>
+    <input type="file" name="photo"><br>
+
+    <input type="submit">
+</form>
