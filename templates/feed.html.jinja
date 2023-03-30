@@ -5,13 +5,11 @@
     <meta name="viewport" content="widith=device-widith, initial-scale=1">
      <title> Cookie Fashion | </title>
     <link href="static/style.css" rel="stylesheet">
-    <h5 class="card-title">{{post['display_name']}} (@{{post['username']}})</h5>
-    <h6 class= "card-subtitle mb-2 text-muted">{{post['timestamp'].strftime("%A, %b")}}</h6>
 
 </head>
 <body>
 <h1>Post Feed </h1>
-{% for post in posts%}
+{% for post in posts %}
    <div>
        <img src="{{post['post_image']}}">
         <p> {{ post['post_text']}}</p>
