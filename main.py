@@ -1,4 +1,4 @@
-from flask import Flask, render_template,request, redirect
+from flask import Flask, render_template,request, redirect, send_from_directory
 from flask_login import LoginManager, login_required, login_user, current_user,logout_user
 
 import pymysql
@@ -30,6 +30,11 @@ connection = pymysql.connect(
     cursorclass=pymysql.cursors.DictCursor,
     autocommit=True
 )
+@app.get('/media/<path:path>')
+def send_media(path):
+    return send_from_directory('media', path)
+
+
 @login_manager.user_loader
 def user_loader(user_id):
     cursor= connection.cursor()
@@ -61,6 +66,33 @@ def post_feed():
         "feed.html.jinja",
         posts=results
     )
+@app.route('/post', methods=['POST'])
+@login_required
+def create_post():
+    cursor= connection.cursor()
+    photo = request.files['post_image']
+
+    file_name=photo.filename #my_photo.jpg
+
+    file_extension= file_name.split ('.')[-1]
+
+    if file_extension.lower() in ['jpg', 'jpeg', 'png', 'gif']:
+        photo.save('media/posts/' + file_name)
+    else:
+        raise Exception('Invaild file type')
+    
+    user_id= current_user.id
+
+
+
+
+    post_text_id=request.form["post_text"]
+    
+    cursor.execute("""INSERT INTO `post` (`post_text`, `post_image`, `user_id`) VALUES (%s, %s, %s)""",
+                   (request.form['post_text'], file_name , user_id,))
+
+    return redirect('/feed')
+    
 @app.route('/sign_out')
 def sign_out():
     logout_user()

@@ -10,14 +10,22 @@
 <body>
 <h1>Post Feed </h1>
 <h1> Hi {{current_user.username}}</h1>
+<form action="/post" method="post"
+enctype="multipart/form-data"
+>
+<textarea name="post_text" ></textarea>
+<input name="post_image" type="file">
+  <input type="submit">
+</div>
+
+</form>
 {% for post in posts %}
    <div>
-       <img src="{{post['post_image']}}">
+       <img src= "/media/posts/{{post['post_image']}}" widith="300">
         <p> {{ post['post_text']}}</p>
          <p> {{ post['post_timestamp']}}</p>
-    <background-color = violet-red> 
     <img src ="fb5607" widith="300">
-    
+    <input type="submit">
 {%endfor%}
        </div>
    </body>
