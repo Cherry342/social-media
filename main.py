@@ -1,4 +1,5 @@
-from flask import Flask, render_template,request, redirect, send_from_directory
+from flask import Flask, render_template,request, redirect, send_from_directory, abort, Blueprint
+
 from flask_login import LoginManager, login_required, login_user, current_user,logout_user
 
 import pymysql
@@ -93,7 +94,7 @@ def create_post():
 
     return redirect('/feed')
     
-@app.route('/sign_out')
+@app.route('/sign-out')
 def sign_out():
     logout_user()
     return redirect('/sign_in')
@@ -145,18 +146,44 @@ def sign_up():
             raise Exception('Invaild file type')
 
         cursor.execute("""
-           INSERT INTO `users` (`username`, `email`, `display_name`, `password`, `bio`, `photo` , `banned`)
+           INSERT INTO `users` (`username`, `email`, `display_name`, `password`, `bio`, `photo`)
            VALUES(%s, %s, %s, %s, %s, %s)
-        """,(request.form['username'], request.form['email'] , request.form['display_name'], request.form['password'], request.form['bio'], file_name, request.form['banned']))
+        """,(request.form['username'], request.form['email'] , request.form['display_name'], request.form['password'], request.form['bio'], file_name ))
         return redirect('/feed')
     elif request.method=='GET':
         return render_template("sign_up.html.jinja")
-    
-    
+     
 
     return render_template("sign_up.html.jinja")
 """
 <input type="file" name= "avatar">
 """
+
+@app.route('/profile/<username>')
+def user_profile(username):
+    cursor= connection.cursor()
+
+    cursor.execute("SELECT * FROM `users` WHERE `username` = %s", (username))
+
+    result= cursor.fetchone()
+    if result is None:
+        abort(404)
+    cursor.close()
+    cursor= connection.cursor()
+    cursor.execute("SELECT * FROM `post` WHERE `user_id` = %s  ORDER BY `timestamp`", (result['id']))
+
+    post_result= cursor.fetchall()
+    return render_template(
+        "user_profile.html.jinja",
+        user=result,
+        posts=post_result
+    )
+   
+@app.errorhandler(404)
+def error_404(error):
+    return render_template('404.html.jinja'), 404
+
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5000)
+
