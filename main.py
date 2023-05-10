@@ -61,7 +61,7 @@ def send_media(path):
 def user_loader(user_id):
     cursor = get_db().cursor()
 
-    cursor.execute("SELECT * from `users` WHERE `id` = " + user_id)
+    cursor.execute("SELECT * from `users` WHERE `id` =  %s" , (user_id))
 
     result= cursor.fetchone()
 
@@ -127,7 +127,7 @@ def sign_in():
     if request.method =='POST':
         cursor = get_db().cursor()
 
-        cursor.execute(f"SELECT * FROM `users` WHERE `username` = '{request.form['username']} '")
+        cursor.execute("SELECT * FROM `users` WHERE `username` = %s", (request.form["username"]))
 
         result=cursor.fetchone()
 

@@ -15,9 +15,9 @@
     <p>{{user.photo}}</p>
     <p>{{user.display_name}}</p>
 {% for post in posts %}
-   <div>
+   <div> 
        <img src= "/media/posts/{{post['post_image']}}" widith="300">
-        <p> {{ post['post_text']}}</p>
+        <p> {{ post['post_text'] | escape }}</p>
          <p> {{ post['post_timestamp']}}</p>
     <img src ="thefive.png" heigth="50" widith="40">
     <input type="submit">

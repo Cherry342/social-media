@@ -22,7 +22,9 @@ enctype="multipart/form-data"
 {% for post in posts %}
    <div>
        <img src= "/media/posts/{{post['post_image']}}" widith="300">
-        <p> {{ post['post_text']}}</p>
+       <p>{{post['post_username']}}</p>
+       
+        <p> {{ post['post_text']| escape}} </p>
          <p> {{ post['post_timestamp']}}</p>
     <img src ="thefive.png" widith="300">
     <input type="submit">
